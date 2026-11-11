@@ -48,3 +48,6 @@ O uso de um laço `for` vazio (atraso ocupado) impacta diretamente o funcionamen
 1. **Uso excessivo da CPU:** O laço mantém a CPU operando a 100% de capacidade executando instruções totalmente inúteis apenas para passar o tempo.
 2. **Bloqueio de tarefas:** Diferente disso, a função `vTaskDelay()` bloqueia a tarefa atual de forma eficiente e devolve o controle do processador ao sistema operacional (RTOS), permitindo que ele entre em estado de baixo consumo ou execute outras rotinas.
 3. **Impacto na bateria:** Em dispositivos embarcados reais alimentados a bateria, desperdiçar ciclos de processamento significa desperdiçar carga preciosa — o software define diretamente o consumo energético, podendo ser a diferença entre um equipamento durar meses ou apenas poucas horas.
+
+   [wokwi-lab1.png..pdf](https://github.com/user-attachments/files/34706688/wokwi-lab1.png.pdf)
+
