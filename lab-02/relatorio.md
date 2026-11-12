@@ -15,13 +15,19 @@
 
 ## 2. Análise de Memória e Gravação
 
+### Consumo de Memória (`idf.py size`)
+O relatório de compilação e alocação de memória gerado pelo comando `idf.py size` apresentou a seguinte distribuição de tamanhos:
+
+* **DRAM (Dados estáticos / variáveis globais):** ~216 KiB utilizados no total (incluindo as regiões de heap e dados da aplicação).
+* **IRAM (Código executado diretamente na RAM):** ~78 KiB utilizados (destinado a rotinas que exigem execução de altíssima velocidade ou interrupções).
+* **Flash (`.text` + `.rodata`):** O armazenamento do programa compilado na memória Flash ocupou aproximadamente 127 KiB.
+
 ### Layout da Flash (Extraído do Log de Boot)
 * **Endereços de gravação encontrados:**
   1. **Bootloader:** Iniciado a partir do offset `0x00001000`.
   2. **Tabela de partições:** Localizada em `0x00008000`.
   3. **Aplicação (App):** Gravada a partir de `0x00010000`.
-* **Papel do endereço `0x10000`:**  
-  É o offset padrão onde o binário principal da aplicação compilada é armazenado na memória Flash. O bootloader do ESP32 lê essa partição específica para carregar e transferir o controle de execução para a função `app_main()` do firmware.
+* **Papel do endereço `0x10000`:** É o offset padrão da tabela de partições onde o binário principal da aplicação compilada é armazenado na memória Flash[cite: 2]. O bootloader do ESP32 lê essa partição específica para carregar e transferir o controle de execução para a função `app_main()` do firmware.
 
 ---
 
