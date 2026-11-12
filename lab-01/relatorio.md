@@ -7,7 +7,7 @@
 
 ## 1. Simulação no Wokwi
 * **Link do projeto:** [Wokwi - Lab 1 Bancada 6](https://wokwi.com/projects/475346102953590785)
-  **Print da tela do Wokwi funcionando com o LED e o resistor de 220 Ω:** [wokwi-lab1.pdf](https://github.com/user-attachments/files/34706956/wokwi-lab1.pdf)
+* **Print da tela do Wokwi funcionando com o LED e o resistor de 220 Ω:** [wokwi-lab1.pdf](https://github.com/user-attachments/files/34706956/wokwi-lab1.pdf)
 
 ---
 
