@@ -42,8 +42,8 @@ while (1) {
 ```
 ## 4. Resposta ao Experimento 3 (Atraso Ocupado vs. `vTaskDelay`)
 
-O uso de um laço `for` vazio (atraso ocupado) impacta diretamente o funcionamento e o consumo do microcontrolador por três motivos principais:
+O uso de um laço for vazio (conhecido como atraso ocupado) muda completamente a forma como o microcontrolador lida com o tempo e com os recursos. Como vimos no Exemplo resolvido 1.1 da teoria, isso impacta a aplicação por três motivos principais:
 
-1. **Uso excessivo da CPU:** O laço mantém a CPU operando a 100% de capacidade executando instruções totalmente inúteis apenas para passar o tempo.
-2. **Bloqueio de tarefas:** Diferente disso, a função `vTaskDelay()` bloqueia a tarefa atual de forma eficiente e devolve o controle do processador ao sistema operacional (RTOS), permitindo que ele entre em estado de baixo consumo ou execute outras rotinas.
-3. **Impacto na bateria:** Em dispositivos embarcados reais alimentados a bateria, desperdiçar ciclos de processamento significa desperdiçar carga preciosa — o software define diretamente o consumo energético, podendo ser a diferença entre um equipamento durar meses ou apenas poucas horas.
+1. **Uso excessivo da CPU:** O laço obriga a CPU a rodar a 100% da sua capacidade só executando instruções vazias e repetitivas para passar o tempo.
+2. **Bloqueio de tarefas:** Ao contrário disso, a função vTaskDelay() avisa o sistema operacional que a tarefa pode pausar. Com isso, a CPU fica livre para entrar em modos de baixo consumo (como o sleep) ou se dedicar a outras rotinas importantes.
+3. **Impacto na bateria:** Em um circuito real funcionando na bateria, desperdiçar ciclos de processamento desse jeito custa caro. Enquanto o uso correto do vTaskDelay poupa energia, um atraso ocupado pode reduzir drasticamente a vida útil de um equipamento autônomo, fazendo com que a bateria dure poucas horas em vez de meses.
