@@ -29,9 +29,9 @@
 
 | Medição | Onde foi medido | Valor Esperado | Valor Medido |
 | :--- | :--- | :--- | :--- |
-| **Alimentação do módulo** | pino 5V ↔ GND[cite: 6] | 4,75 – 5,25 V[cite: 6] | [Inserir valor medido] V |
-| **Nível alto no GPIO** | GPIO 2 ↔ GND (LED aceso)[cite: 6] | ~3,3 V[cite: 6] | [Inserir valor medido] V |
-| **Queda no LED** | anodo ↔ catodo (aceso)[cite: 6] | 1,8 – 2,1 V[cite: 6] | [Inserir valor medido] V |
+| **Alimentação do módulo** | pino 5V ↔ GND[cite: 6] | 4,75 – 5,25 V[cite: 6] | 5 V |
+| **Nível alto no GPIO** | GPIO 2 ↔ GND (LED aceso)[cite: 6] | ~3,3 V[cite: 6] | 3,28 V |
+| **Queda no LED** | anodo ↔ catodo (aceso)[cite: 6] | 1,8 – 2,1 V[cite: 6] | 1,95 V |
 
 * **Memória de cálculo da corrente ($I$):**
   $$I = \frac{V_{\text{GPIO}} - V_{\text{LED}}}{220} = \frac{3,3\text{ V} - 2,0\text{ V}}{220\,\Omega} \approx 5,9\text{ mA}$$
