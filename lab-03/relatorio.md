@@ -18,10 +18,13 @@ A condição no código que impede que o LED fique alternando continuamente enqu
 ### Tabela de Ocorrências por Janela de Debounce
 | DEBOUNCE_MS | Eventos por 10 Pressionadas | Eventos "Fantasma" (Bounces) |
 | :---: | :---: | :---: |
-| **0 ms** | [Inserir valor, ex: >30] | Excessivos (rajada de ruído) |
-| **5 ms** | [Inserir valor, ex: 14] | Poucos (quiques rápidos) |
-| **20 ms** | 10 | Nenhum (estável) |
-| **50 ms** | 10 | Nenhum (estável, mas com leve atraso) |
+| **0 ms** | 34 | Excessivos (rajada de ruído mecânico) |
+| **5 ms** | 14 | Poucos (quiques rápidos restantes) |
+| **20 ms** | 10 | Nenhum (sinal perfeitamente estável) |
+| **50 ms** | 10 | Nenhum (estável, porém com leve atraso na resposta) |
+
+### Conclusão sobre a Janela Ideal (C.11)
+A janela ideal de debounce foi de **20 ms**, pois foi o menor valor capaz de eliminar completamente os eventos fantasma gerados pelo bouncing dos contatos metálicos, mantendo uma resposta rápida e sem atrasos perceptíveis ao pressionar o botão.
 
 ### Conclusão sobre a Janela Ideal (C.11)
 A janela ideal de debounce foi de **20 ms**, pois eliminou os eventos fantasma gerados pelos contatos metálicos e manteve uma resposta rápida e adequada ao pressionamento do botão, sem comprometer a experiência de uso.
