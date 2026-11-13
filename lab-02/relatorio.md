@@ -9,7 +9,8 @@
 * **Foto da montagem física:**  
   *(Inserir aqui a foto do circuito montado no protoboard com o ESP32 e o LED externo)*
 * **Captura de tela do monitor serial (`idf.py flash monitor`):**  
-  O terminal confirmou a gravação bem-sucedida nos endereços de flash, o bootloader inicializando a partir do offset correto e o log de execução do firmware da bancada.
+  <img width="1755" height="1242" alt="LAB2" src="https://github.com/user-attachments/assets/ed62152c-b43a-479d-990a-0be3e70f0c83" />
+
 
 ---
 
