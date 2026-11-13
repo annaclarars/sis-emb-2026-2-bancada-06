@@ -26,9 +26,6 @@ A condição no código que impede que o LED fique alternando continuamente enqu
 ### Conclusão sobre a Janela Ideal (C.11)
 A janela ideal de debounce foi de **20 ms**, pois foi o menor valor capaz de eliminar completamente os eventos fantasma gerados pelo bouncing dos contatos metálicos, mantendo uma resposta rápida e sem atrasos perceptíveis ao pressionar o botão.
 
-### Conclusão sobre a Janela Ideal (C.11)
-A janela ideal de debounce foi de **20 ms**, pois eliminou os eventos fantasma gerados pelos contatos metálicos e manteve uma resposta rápida e adequada ao pressionamento do botão, sem comprometer a experiência de uso.
-
 ---
 
 ## 3. Mudanças para Pull-Down Externo (Parte D - Diff do Código)
