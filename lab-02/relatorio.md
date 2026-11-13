@@ -6,10 +6,10 @@
 ---
 
 ## 1. Evidências Visuais e de Execução
-* **Foto da montagem física:**  
-  *(Inserir aqui a foto do circuito montado no protoboard com o ESP32 e o LED externo)*
+
 * **Captura de tela do monitor serial (`idf.py flash monitor`):**  
-  <img width="1755" height="1242" alt="LAB2" src="https://github.com/user-attachments/assets/ed62152c-b43a-479d-990a-0be3e70f0c83" />
+<img width="1709" height="303" alt="LAB2" src="https://github.com/user-attachments/assets/de126e93-57e2-4ed2-8a96-b242bb7306c6" />
+
 
 
 ---
