@@ -78,3 +78,10 @@ O polling do Lab 3 não conseguiria contar corretamente os pulsos do encoder ($3
 | **1** | $150\text{ ms}$ | $149,8\text{ ms}$ | $\approx 0,2\text{ ms}$ (pequeno jitter do tick) |
 | **2** | $1200\text{ ms}$ | $1200,4\text{ ms}$ | $\approx 0,4\text{ ms}$ (pequeno jitter do tick) |
 | **3** | $150 / 1200\text{ ms}$ | $149,9 / 1200,2\text{ ms}$ | Validação cruzada com o gerador |
+
+## 5. Por que printf dentro da ISR é proibido e como o firmware contorna (flag volatile lida pela tarefa)?
+### Por que é proibido?
+Uma interrupção (ISR) precisa ser relâmpago e rodar direto no nível do hardware. O printf faz coisas pesadas e demoradas, como gerenciar buffers de texto e travar recursos de sistema (mutexes) que exigem um ambiente seguro de tarefa do FreeRTOS. Se você bota um printf lá dentro, o sistema se perde e dá tela azul / panic na hora.
+
+### Como o firmware contorna?
+Para contornar a proibição do `printf` dentro de uma ISR, o firmware utiliza a tática da separação de tarefas: a interrupção acorda imediatamente, captura o tempo com `esp_timer_get_time()` e atualiza uma variável global marcada com a palavra-chave `volatile` para indicar o evento sem se bloquear, permitindo que uma tarefa normal de fundo monitore essa variável e execute o processamento pesado ou a exibição de logs de forma segura e com todo o suporte do sistema operacional.
