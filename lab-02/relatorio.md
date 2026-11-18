@@ -7,6 +7,10 @@
 
 ## 1. Evidências Visuais e de Execução
 
+* **Montagem física:**
+  <img width="1200" height="1600" alt="Imag lab2" src="https://github.com/user-attachments/assets/6312074a-be6c-4eaf-b4f0-4c576360419d" />
+
+
 * **Captura de tela do monitor serial (`idf.py flash monitor`):**  
 <img width="1709" height="303" alt="LAB2" src="https://github.com/user-attachments/assets/de126e93-57e2-4ed2-8a96-b242bb7306c6" />
 
