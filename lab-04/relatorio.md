@@ -85,3 +85,5 @@ Uma interrupção (ISR) precisa ser relâmpago e rodar direto no nível do hardw
 
 ### Como o firmware contorna?
 Para contornar a proibição do `printf` dentro de uma ISR, o firmware utiliza a tática da separação de tarefas: a interrupção acorda imediatamente, captura o tempo com `esp_timer_get_time()` e atualiza uma variável global marcada com a palavra-chave `volatile` para indicar o evento sem se bloquear, permitindo que uma tarefa normal de fundo monitore essa variável e execute o processamento pesado ou a exibição de logs de forma segura e com todo o suporte do sistema operacional.
+
+<img width="1200" height="1600" alt="Lab4" src="https://github.com/user-attachments/assets/eb17e7ab-e1b2-49dc-ad88-e48b274cea96" />
