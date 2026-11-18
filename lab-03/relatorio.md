@@ -38,3 +38,4 @@ Para transicionar do circuito com pull-up interno para o pull-down externo, as a
 
 ## 4. Evidências Visuais
 * **Foto da montagem final (Pull-Down com resistor de $10\text{ k}\Omega$):**  
+<img width="1200" height="1600" alt="Imag lab3" src="https://github.com/user-attachments/assets/b404e12c-b30b-4c99-ae78-67a9677933d2" />
