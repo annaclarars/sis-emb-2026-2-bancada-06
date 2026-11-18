@@ -38,4 +38,3 @@ Para transicionar do circuito com pull-up interno para o pull-down externo, as a
 
 ## 4. Evidências Visuais
 * **Foto da montagem final (Pull-Down com resistor de $10\text{ k}\Omega$):**  
-  *(Inserir aqui a foto da protoboard com o resistor de $10\text{ k}\Omega$ visível ligando o GPIO4 ao GND)*
