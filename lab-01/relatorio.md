@@ -47,3 +47,7 @@ O uso de um laço for vazio (conhecido como atraso ocupado) muda completamente a
 1. **Uso excessivo da CPU:** O laço obriga a CPU a rodar a 100% da sua capacidade só executando instruções vazias e repetitivas para passar o tempo.
 2. **Bloqueio de tarefas:** Ao contrário disso, a função vTaskDelay() avisa o sistema operacional que a tarefa pode pausar. Com isso, a CPU fica livre para entrar em modos de baixo consumo (como o sleep) ou se dedicar a outras rotinas importantes.
 3. **Impacto na bateria:** Em um circuito real funcionando na bateria, desperdiçar ciclos de processamento desse jeito custa caro. Enquanto o uso correto do vTaskDelay poupa energia, um atraso ocupado pode reduzir drasticamente a vida útil de um equipamento autônomo, fazendo com que a bateria dure poucas horas em vez de meses.
+
+## 5. Print do idf.py --version do PC da bancada
+
+<img width="818" height="581" alt="Screenshot from 2026-11-18 15-07-07" src="https://github.com/user-attachments/assets/f8cc6740-ab32-440b-adad-d3137ebdfd8b" />
