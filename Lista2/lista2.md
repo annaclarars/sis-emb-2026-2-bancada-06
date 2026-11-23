@@ -31,15 +31,11 @@
 
 Utilizamos:
 
-\[
-T = \frac{1}{f}
-\]
+$$T = \frac{1}{f}$$
 
 Substituindo:
 
-\[
-T = \frac{1}{1000} = 0,001s = 1ms
-\]
+$$T = \frac{1}{1000} = 0,001\text{ s} = 1\text{ ms}$$
 
 Portanto, os pulsos podem ocorrer a cada 1 ms.
 
@@ -57,17 +53,11 @@ Assim, vários pulsos podem ser perdidos.
 
 O critério da teoria é:
 
-\[
-T_{polling} \leq \frac{T_{evento}}{10}
-\]
+$$T_{\text{polling}} \leq \frac{T_{\text{evento}}}{10}$$
 
-\[
-T_{polling} \leq \frac{1ms}{10}
-\]
+$$T_{\text{polling}} \leq \frac{1\text{ ms}}{10}$$
 
-\[
-T_{polling} \leq 0,1ms = 100\mu s
-\]
+$$T_{\text{polling}} \leq 0,1\text{ ms} = 100\ \mu\text{s}$$
 
 **Passo 4 — Verificar a duração do pulso**
 
@@ -80,8 +70,6 @@ Isso oferece aproximadamente quatro verificações durante a duração de um pul
 Um polling de 100 µs exige 10.000 verificações por segundo, aumentando o uso do processador.
 
 Para essa aplicação, a interrupção é mais adequada.
-
-
 ---
 
 ### Q3. As três regras de ouro de uma ISR.
@@ -107,61 +95,53 @@ Exemplo de operação inadequada:
 ### Q4. Dimensionamento do temporizador para 250 ms
 
 **Dados:**
-- Clock base: 80 MHz.
-- Período desejado: 250 ms.
-- Frequência de interrupção: uma a cada 250 ms.
+- Clock base: $80\text{ MHz}$
+- Período desejado: $250\text{ ms}$
+- Frequência de interrupção: uma a cada $250\text{ ms}$
 
 **Passo 1 — Converter o tempo**
 
-250 ms = 0,25 s
+$$250\text{ ms} = 0,25\text{ s}$$
 
 **Passo 2 — Calcular a quantidade de ciclos do clock**
 
 Utilizamos:
 
-N = f × T
+$$N = f \times T$$
 
 Substituindo:
 
-N = 80.000.000 × 0,25
-N = 20.000.000 ciclos
+$$N = 80.000.000\text{ Hz} \times 0,25\text{ s} = 20.000.000\text{ ciclos}$$
 
-Precisamos configurar o temporizador para contar 20 milhões de ciclos efetivos.
+Precisamos configurar o temporizador para contar $20$ milhões de ciclos efetivos.
 
 **Passo 3 — Primeira combinação**
 
-Escolhendo prescaler de 80:
+Escolhendo prescaler de $80$:
 
-f_timer = 80.000.000 / 80
-f_timer = 1.000.000 Hz
+$$f_{\text{timer}} = \frac{80.000.000}{80} = 1.000.000\text{ Hz}$$
 
-O temporizador passa a contar 1 milhão de vezes por segundo.
+O temporizador passa a contar $1$ milhão de vezes por segundo. Para $250\text{ ms}$:
 
-Para 250 ms:
-
-C = 1.000.000 × 0,25
-C = 250.000
+$$C = 1.000.000 \times 0,25 = 250.000$$
 
 **Passo 4 — Segunda combinação**
 
-Escolhendo prescaler de 160:
+Escolhendo prescaler de $160$:
 
-f_timer = 80.000.000 / 160
-f_timer = 500.000 Hz
+$$f_{\text{timer}} = \frac{80.000.000}{160} = 500.000\text{ Hz}$$
 
 Agora:
 
-C = 500.000 × 0,25
-C = 125.000
+$$C = 500.000 \times 0,25 = 125.000$$
 
 **Passo 5 — Qual combinação escolher?**
 
-As duas combinações produzem o mesmo período ideal de 250 ms.
+As duas combinações produzem o mesmo período ideal de $250\text{ ms}$. Eu escolheria a primeira, com prescaler $80$, por apresentar uma frequência de contagem de $1\text{ MHz}$, facilitando a interpretação do tempo em microssegundos.
 
-Eu escolheria a primeira, com prescaler 80, por apresentar uma frequência de contagem de 1 MHz, facilitando a interpretação do tempo em microssegundos.
+**Resposta:** Para gerar uma interrupção a cada $250\text{ ms}$, podemos utilizar prescaler $80$ e comparação $250.000$ ou prescaler $160$ e comparação $125.000$. A primeira opção é mais simples de interpretar, pois cada contagem corresponde a $1\ \mu\text{s}$.
 
-**Observação:** O valor de comparação pode exigir ajuste de uma contagem, dependendo da convenção do registrador (contagem até N ou até N−1) e da configuração do temporizador.
-
+*Observação:* O valor de comparação pode exigir ajuste de uma contagem, dependendo da convenção do registrador (contagem até $N$ ou até $N-1$) e da configuração do temporizador.
 
 ### Q5. Watchdog Timer (WDT)
 
@@ -249,40 +229,33 @@ Quando a tarefa executa `vTaskDelay()`, ela passa para o estado bloqueado. Depoi
 ### Q7. Diferença entre vTaskDelay e vTaskDelayUntil
 
 **Dados do exercício:**
-- Período desejado: 100 ms.
-- Tempo de execução do corpo: 7 ms.
-- Tempo total analisado: 1 minuto.
+- Período desejado: $100\text{ ms}$
+- Tempo de execução do corpo: $7\text{ ms}$
+- Tempo total analisado: $1\text{ minuto}$ ($60.000\text{ ms}$)
 
 **Passo 1 — Calcular o período com vTaskDelay()**
 
-A função `vTaskDelay()` espera um tempo relativo ao instante em que é chamada.
+A função `vTaskDelay()` espera um tempo relativo ao instante em que é chamada. Portanto, precisamos somar o tempo de execução do corpo ao tempo de espera.
 
-Portanto, precisamos somar o tempo de execução do corpo ao tempo de espera.
-
-T_efetivo = T_execução + T_delay
+$$T_{\text{efetivo}} = T_{\text{execução}} + T_{\text{delay}}$$
 
 Substituindo:
 
-T_efetivo = 7 + 100
-T_efetivo = 107 ms
+$$T_{\text{efetivo}} = 7\text{ ms} + 100\text{ ms} = 107\text{ ms}$$
 
 **Passo 2 — Calcular a deriva acumulada**
 
-A cada ciclo, temos um atraso adicional de 7 ms em relação ao período desejado.
+A cada ciclo, temos um atraso adicional de $7\text{ ms}$ em relação ao período desejado. Em um minuto ($60.000\text{ ms}$):
 
-Em um minuto:
+$$N = \frac{60.000\text{ ms}}{100\text{ ms}} = 600\text{ ciclos}$$
 
-N = 60.000 / 100
-N = 600 ciclos
+Agora calculamos a deriva total ($D$):
 
-Agora calculamos:
+$$D = 600 \times 7\text{ ms} = 4.200\text{ ms}$$
 
-D = 600 × 7
-D = 4200 ms
+Convertendo para segundos:
 
-Convertendo:
-
-D = 4,2 s
+$$D = 4,2\text{ s}$$
 
 **Passo 3 — Corrigir com vTaskDelayUntil()**
 
@@ -290,59 +263,50 @@ A função `vTaskDelayUntil()` utiliza uma referência temporal absoluta para ma
 
 Exemplo:
 
-    void tarefa_periodica(void *param) {
-        TickType_t ultimo = xTaskGetTickCount();
-        const TickType_t periodo = pdMS_TO_TICKS(100);
+void tarefa_periodica(void *param) {
+    TickType_t ultimo = xTaskGetTickCount();
+    const TickType_t periodo = pdMS_TO_TICKS(100);
 
-        while (1) {
-            // Executa o trabalho da tarefa
+    while (1) {
+        // Executa o trabalho da tarefa
 
-            vTaskDelayUntil(&ultimo, periodo);
-        }
+        vTaskDelayUntil(&ultimo, periodo);
     }
-
-**Passo 4 — Comparar as funções**
-
-| Função | Funcionamento |
-|---|---|
-| `vTaskDelay()` | Espera um tempo relativo após ser chamada. |
-| `vTaskDelayUntil()` | Mantém uma referência temporal para os próximos períodos. |
-
+}
 
 
 
 ### Q8. Prioridades e utilização da CPU
 
+
 **Dados:**
-- Tarefa A: 3 ms de CPU a cada 10 ms.
-- Tarefa B: 10 ms de CPU a cada 100 ms.
-- Tarefa C: executa quando houver tempo disponível.
+- Tarefa A: $3\text{ ms}$ de CPU a cada $10\text{ ms}$
+- Tarefa B: $10\text{ ms}$ de CPU a cada $100\text{ ms}$
+- Tarefa C: executa quando houver tempo disponível
 
 **Passo 1 — Calcular a utilização da tarefa A**
 
 A fórmula é:
 
-U = C / T
+$$U = \frac{C}{T}$$
 
 Onde:
-- C = tempo de execução.
-- T = período da tarefa.
+- $C = \text{tempo de execução}$
+- $T = \text{período da tarefa}$
 
 Substituindo:
 
-U_A = 3 / 10
-U_A = 30%
+$$U_A = \frac{3\text{ ms}}{10\text{ ms}} = 0,30 = 30\%$$
 
 **Passo 2 — Calcular a utilização da tarefa B**
 
-U_B = 10 / 100
-U_B = 10%
+$$U_B = \frac{10\text{ ms}}{100\text{ ms}} = 0,10 = 10\%$$
 
 **Passo 3 — Calcular a utilização total**
 
-U_total = U_A + U_B
-U_total = 30% + 10%
-U_total = 40%
+$$U_{\text{total}} = U_A + U_B$$
+
+$$U_{\text{total}} = 30\% + 10\% = 40\%$$
 
 **Passo 4 — Definir as prioridades**
 
@@ -356,28 +320,27 @@ Uma atribuição adequada seria:
 
 **Passo 5 — Verificar se C ainda consegue executar**
 
-Se A e B utilizam 40% da CPU, sobra:
+Se A e B utilizam $40\%$ da CPU, sobra:
 
-100% − 40% = 60%
+$$100\% - 40\% = 60\%$$
 
-Portanto, a tarefa C ainda pode utilizar aproximadamente 60% da CPU.
+Portanto, a tarefa C ainda pode utilizar aproximadamente $60\%$ da CPU.
 
 **Passo 6 — E se B passar a utilizar 60 ms a cada 100 ms?**
 
-Novo cálculo:
+Novo cálculo para a Tarefa B:
 
-U_B = 60 / 100
-U_B = 60%
+$$U_B = \frac{60\text{ ms}}{100\text{ ms}} = 60\%$$
 
-U_total = 30% + 60%
-U_total = 90%
+Nova utilização total:
+
+$$U_{\text{total}} = 30\% + 60\% = 90\%$$
 
 Agora sobra:
 
-100% − 90% = 10%
+$$100\% - 90\% = 10\%$$
 
-A tarefa C ainda consegue executar, mas terá apenas aproximadamente 10% da CPU disponível, considerando um processador ideal sem sobrecargas.
-
+A tarefa C ainda consegue executar, mas terá apenas aproximadamente $10\%$ da CPU disponível, considerando um processador ideal sem sobrecargas.
 
 
 ### Q9. Starvation e time slicing
