@@ -14,7 +14,7 @@
 | Uso de CPU | Pode consumir CPU verificando continuamente. | Permite que a CPU execute outras tarefas. |
 | Complexidade | Mais simples de implementar. | Exige cuidados com ISR e sincronização. |
 
-**Resposta:** Polling verifica continuamente se um evento aconteceu, enquanto a interrupção permite que o processador seja avisado pelo hardware quando o evento ocorre. O polling é mais simples, mas pode consumir mais CPU e apresentar maior latência. É uma boa escolha para eventos lentos, sistemas simples e situações em que o tempo de resposta não é crítico.
+
 
 ---
 
@@ -81,7 +81,6 @@ Um polling de 100 µs exige 10.000 verificações por segundo, aumentando o uso 
 
 Para essa aplicação, a interrupção é mais adequada.
 
-**Resposta:** O polling de 10 ms perde pulsos porque o encoder pode gerar um novo pulso a cada 1 ms, com duração de apenas 400 µs. Pelo critério da teoria, o polling deveria ocorrer a cada 100 µs ou menos. Como isso exige verificações muito frequentes, a utilização de uma ISR é mais adequada.
 
 ---
 
@@ -103,8 +102,7 @@ Uma ISR não deve executar operações que possam bloquear, como esperar indefin
 
 Exemplo de operação inadequada:
 
-```c
-xSemaphoreTake(meu_semaforo, portMAX_DELAY);
+
 
 ### Q4. Dimensionamento do temporizador para 250 ms
 
