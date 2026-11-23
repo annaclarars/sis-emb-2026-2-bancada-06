@@ -160,8 +160,6 @@ As duas combinações produzem o mesmo período ideal de 250 ms.
 
 Eu escolheria a primeira, com prescaler 80, por apresentar uma frequência de contagem de 1 MHz, facilitando a interpretação do tempo em microssegundos.
 
-**Resposta:** Para gerar uma interrupção a cada 250 ms, podemos utilizar prescaler 80 e comparação 250.000 ou prescaler 160 e comparação 125.000. A primeira opção é mais simples de interpretar, pois cada contagem corresponde a 1 µs.
-
 **Observação:** O valor de comparação pode exigir ajuste de uma contagem, dependendo da convenção do registrador (contagem até N ou até N−1) e da configuração do temporizador.
 
 
@@ -196,8 +194,6 @@ Imagine que uma tarefa importante esteja travada, mas uma interrupção de timer
 Se a ISR alimentar o watchdog, ele continuará acreditando que o sistema está funcionando normalmente, mesmo que a tarefa principal esteja travada.
 
 Isso esconde o problema em vez de resolvê-lo.
-
-**Resposta:** O Watchdog Timer monitora o funcionamento do sistema e identifica situações em que o programa deixa de responder. Quando não recebe alimentação dentro do período determinado, pode reiniciar o sistema. Alimentar o WDT dentro de uma ISR é um antipadrão porque a interrupção pode continuar funcionando mesmo quando as tarefas principais estão travadas, escondendo a falha.
 
 
 ### Q6. Diagrama de estados de uma tarefa
@@ -247,7 +243,7 @@ Imagine uma tarefa que atualiza um LED a cada 100 ms:
 
 Quando a tarefa executa `vTaskDelay()`, ela passa para o estado bloqueado. Depois dos 100 ms, volta para o estado pronto.
 
-**Resposta:** Os estados de uma tarefa FreeRTOS são pronta, executando, bloqueada e suspensa. No Lab 5, uma tarefa que chama `vTaskDelayUntil()` passa de executando para bloqueada. Quando o tempo termina, volta para pronta e aguarda o escalonador liberar a CPU.
+
 
 
 ### Q7. Diferença entre vTaskDelay e vTaskDelayUntil
@@ -312,7 +308,7 @@ Exemplo:
 | `vTaskDelay()` | Espera um tempo relativo após ser chamada. |
 | `vTaskDelayUntil()` | Mantém uma referência temporal para os próximos períodos. |
 
-**Resposta:** Com `vTaskDelay(100 ms)`, o período efetivo é de 107 ms, pois são somados os 7 ms de execução e os 100 ms de espera. A deriva teórica em 600 períodos é de 4,2 segundos. Com `vTaskDelayUntil()`, a tarefa mantém uma referência temporal absoluta, evitando o acúmulo dessa deriva, desde que consiga cumprir seus prazos.
+
 
 
 ### Q8. Prioridades e utilização da CPU
@@ -382,7 +378,7 @@ Agora sobra:
 
 A tarefa C ainda consegue executar, mas terá apenas aproximadamente 10% da CPU disponível, considerando um processador ideal sem sobrecargas.
 
-**Resposta:** A tarefa A utiliza 30% da CPU e a tarefa B utiliza 10%, totalizando 40%. Podemos atribuir prioridade alta para A, média para B e baixa para C. Nesse cenário, C dispõe de aproximadamente 60% da CPU. Se B passar a utilizar 60%, o consumo total será de 90%, restando apenas 10% para C.
+
 
 ### Q9. Starvation e time slicing
 
@@ -417,7 +413,7 @@ O FreeRTOS possui tarefas idle que executam quando não há tarefas de maior pri
 - No Lab 4, o experimento `PROVOCAR_WDT` demonstrou o acionamento do watchdog.
 - No Lab 5, a tarefa `HOG` foi utilizada para demonstrar a ocupação excessiva da CPU.
 
-**Resposta:** Starvation acontece quando uma tarefa não consegue obter tempo de CPU porque outras tarefas ocupam continuamente o processador. O time slicing divide o tempo entre tarefas de mesma prioridade, mas não resolve o problema de uma tarefa de prioridade alta que nunca bloqueia. O watchdog de idle ajuda a identificar esse problema quando a tarefa idle deixa de executar.
+
 
 ---
 
@@ -459,7 +455,7 @@ int contador = 0;
 
 Se duas tarefas modificarem `contador` ao mesmo tempo, pode ocorrer uma condição de corrida. Por isso, precisamos utilizar mecanismos de sincronização, como mutex, quando apropriado.
 
-**Resposta:** Ao utilizar `xTaskCreatePinnedToCore()`, podemos fixar a tarefa de controle no Core 1 e deixar atividades do sistema e Wi-Fi no Core 0. Isso pode reduzir o jitter e melhorar a previsibilidade da tarefa. Entretanto, é necessário proteger os dados compartilhados, pois os dois núcleos podem executar acessos simultaneamente.
+
 
 ---
 
@@ -553,7 +549,6 @@ int total = contador_A + contador_B; // Total = 2000
 
 Essa alternativa é adequada quando precisamos apenas do resultado final. Entretanto, se outras tarefas precisarem consultar o valor total durante a execução e obter uma leitura instantânea consistente, será necessário implementar uma sincronização apropriada.
 
-**Resposta:** A condição de corrida acontece quando duas tarefas acessam e modificam uma variável compartilhada sem proteção. Como `g++` envolve leitura, incremento e escrita, uma tarefa pode sobrescrever o resultado da outra. O valor final pode variar de 1.000 a 2.000. Podemos resolver utilizando mutex ou variáveis individuais por tarefa, somadas posteriormente.
 
 ---
 
@@ -586,7 +581,6 @@ Não devemos utilizar as APIs comuns de tarefas dentro de uma ISR. Exemplos de v
 
 No caso de Event Groups, a operação de ISR utiliza um mecanismo de envio para a tarefa daemon de temporizadores, portanto depende também de essa infraestrutura estar disponível. Mutex não deve ser utilizado diretamente dentro de uma ISR.
 
-**Resposta:** Filas transportam dados, semáforos sinalizam eventos ou controlam recursos, mutex protege regiões críticas e Event Groups permitem sinalizar múltiplos eventos por bits. Filas e semáforos possuem versões específicas para ISR, assim como Event Groups possuem uma API própria. Mutex não pode ser utilizado diretamente em interrupções.
 
 ---
 
@@ -635,7 +629,7 @@ N = 2000 × 0,06 = 120 amostras
 
 Como a fila possui capacidade para 160 itens (`120 < 160`), ela suporta o atraso caso esteja inicialmente vazia.
 
-**Resposta:** A fila deve ter capacidade para 160 itens, ocupando 640 bytes. Durante uma interrupção de 60 ms na execução da tarefa consumidora, serão produzidas 120 amostras. A fila dimensionada consegue armazená-las se houver espaço disponível. Sem capacidade suficiente, ocorrerá estouro da fila e perda de dados.
+
 
 ---
 
@@ -666,7 +660,7 @@ O FreeRTOS utiliza herança de prioridade nos mutexes. Quando uma tarefa de alta
 
 O semáforo binário não possui a mesma relação de propriedade que um mutex. Por isso, não oferece o mecanismo de herança de prioridade.
 
-**Resposta:** Inversão de prioridade acontece quando uma tarefa de alta prioridade fica esperando por um recurso utilizado por uma tarefa de baixa prioridade. No caso Mars Pathfinder, uma tarefa de prioridade intermediária impedia que a tarefa de baixa prioridade liberasse o mutex necessário à tarefa de alta prioridade, provocando reinicializações. O mutex do FreeRTOS utiliza herança de prioridade para permitir que a tarefa que possui o recurso execute com prioridade temporariamente elevada. O semáforo binário não oferece esse mecanismo.
+
 
 ---
 
@@ -738,4 +732,3 @@ Porque uma ISR deve executar rapidamente. Se colocarmos operações demoradas de
 - Executar cálculos.
 - Utilizar funções que podem bloquear.
 
-**Resposta:** O padrão ISR→tarefa utiliza `xSemaphoreGiveFromISR()` para sinalizar que o botão foi pressionado e `xSemaphoreTake()` para a tarefa receber o evento. A função `portYIELD_FROM_ISR()` permite solicitar uma troca de contexto quando necessário. O processamento pesado deve ficar na tarefa porque a ISR precisa ser curta e não pode executar operações bloqueantes.
